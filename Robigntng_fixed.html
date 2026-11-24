@@ -1,0 +1,1482 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreshMart - Toko Buah Segar</title>
+
+<script>
+(function() {
+    const mode = localStorage.getItem("freshmart-theme");
+    if (mode === "dark") {
+        document.documentElement.classList.add("dark-mode");
+    }
+})();
+</script>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+:root {
+    --bg: #f8fff5;
+    --text: #253b2b;
+    --header: #187844;
+    --hero: #e3ffd2;
+    --hero2: #f7ffe9;
+    --card: #ffffff;
+    --soft: #eaf8e3;
+    --border: #e5efdf;
+    --input: #ffffff;
+    --muted: #647267;
+    --cart: #f5faef;
+    --footer: #145b32;
+    --shadow: #193d1912;
+    --title: #176b3a;
+    --accent: #188044;
+}
+
+html.dark-mode {
+    --bg: #111a14;
+    --text: #e4eee5;
+    --header: #172b20;
+    --hero: #1a3022;
+    --hero2: #14251a;
+    --card: #1c2921;
+    --soft: #192c20;
+    --border: #344a39;
+    --input: #17231b;
+    --muted: #a5b6a8;
+    --cart: #17251c;
+    --footer: #101d15;
+    --shadow: #00000035;
+    --title: #a7e6b5;
+    --accent: #56bb79;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.35s, color 0.35s;
+    overflow-x: hidden;
+}
+
+/* ANIMASI */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(35px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+}
+
+@keyframes pop {
+    0% { transform: scale(0.85); }
+    70% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes shine {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(35px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+
+/* HEADER */
+header {
+    background: var(--header);
+    color: white;
+    padding: 18px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 15px #00000015;
+    animation: fadeIn 0.7s ease;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #d9ff88;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    position: relative;
+    transition: 0.3s;
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 2px;
+    background: #d9ff88;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #d9ff88;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+/* TOGGLE MODE */
+.theme-toggle {
+    background: #d9ff88;
+    color: #176b3a;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.07) rotate(-2deg);
+    background: #c7f56c;
+}
+
+/* HERO */
+.hero {
+    padding: 75px 7%;
+    background: linear-gradient(120deg, var(--hero), var(--hero2));
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    min-height: 500px;
+}
+
+.hero-text {
+    flex: 1;
+    min-width: 260px;
+    animation: fadeUp 0.9s ease both;
+}
+
+.hero h1 {
+    font-size: clamp(34px, 5vw, 56px);
+    color: var(--title);
+    margin-bottom: 18px;
+    line-height: 1.15;
+}
+
+.hero p {
+    font-size: 17px;
+    line-height: 1.8;
+    margin-bottom: 28px;
+    color: var(--text);
+}
+
+.hero-image {
+    flex: 1;
+    min-width: 260px;
+    animation: fadeUp 1s ease 0.2s both;
+}
+
+.hero-image img {
+    width: 100%;
+    max-height: 370px;
+    object-fit: cover;
+    border-radius: 28px;
+    box-shadow: 0 12px 30px var(--shadow);
+    animation: float 5s ease-in-out infinite;
+}
+
+.hero-label {
+    display: inline-block;
+    background: #188044;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 25px;
+    margin-bottom: 18px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* BUTTON */
+.btn {
+    display: inline-block;
+    background: #188044;
+    color: white;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #105e30;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px #18804435;
+}
+
+.btn:active {
+    transform: scale(0.96);
+}
+
+/* SECTION */
+section {
+    padding: 65px 7%;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 12px;
+    color: var(--title);
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--muted);
+    margin-bottom: 38px;
+    line-height: 1.7;
+}
+
+/* PRODUK */
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 24px;
+}
+
+.card {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 5px 18px var(--shadow);
+    border: 1px solid var(--border);
+    transition: transform 0.35s, box-shadow 0.35s;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-9px);
+    box-shadow: 0 14px 30px var(--shadow);
+}
+
+.fruit {
+    width: 100%;
+    height: 175px;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    background: var(--soft);
+}
+
+.fruit img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.card:hover .fruit img {
+    transform: scale(1.1);
+}
+
+.card h3 {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.card p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.price {
+    color: var(--accent);
+    font-size: 21px;
+    font-weight: bold;
+    margin: 14px 0;
+}
+
+.card .btn {
+    width: 100%;
+    font-size: 14px;
+}
+
+/* MANFAAT */
+.benefits {
+    background: var(--soft);
+}
+
+.benefit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+}
+
+.benefit-card {
+    background: var(--card);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    box-shadow: 0 5px 18px var(--shadow);
+    overflow: hidden;
+    transition: transform 0.35s, box-shadow 0.35s;
+}
+
+.benefit-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 14px 30px var(--shadow);
+}
+
+.benefit-card img {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s;
+}
+
+.benefit-card:hover img {
+    transform: scale(1.07);
+}
+
+.benefit-content {
+    padding: 22px;
+    text-align: center;
+}
+
+.benefit-content h3 {
+    color: var(--title);
+    font-size: 21px;
+    margin-bottom: 12px;
+}
+
+.benefit-content p {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+/* BAGIAN PEMESANAN */
+.order {
+    background: var(--bg);
+}
+
+.order-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    max-width: 1100px;
+    margin: auto;
+    align-items: start;
+}
+
+/* KARTU KERANJANG */
+.order-box {
+    background: var(--card);
+    padding: 25px;
+    border-radius: 22px;
+    box-shadow: 0 8px 25px var(--shadow);
+    border: 1px solid var(--border);
+    transition: 0.3s;
+}
+
+.order-box:hover {
+    box-shadow: 0 12px 30px var(--shadow);
+}
+
+.box-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.box-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--soft);
+    border-radius: 15px;
+    font-size: 23px;
+}
+
+.box-heading h3 {
+    color: var(--title);
+    font-size: 21px;
+}
+
+.box-heading p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.cart-list {
+    background: var(--cart);
+    border-radius: 14px;
+    padding: 15px;
+    margin-top: 10px;
+    line-height: 1.8;
+    border: 1px solid var(--border);
+    min-height: 80px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--border);
+    animation: pop 0.3s ease;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-name {
+    font-weight: bold;
+}
+
+.cart-price {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.qty-controls button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 8px;
+    background: #188044;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.qty-controls button:hover {
+    transform: scale(1.1);
+    background: #105e30;
+}
+
+.qty-number {
+    font-weight: bold;
+    min-width: 20px;
+    text-align: center;
+}
+
+.total-box {
+    background: var(--soft);
+    padding: 18px;
+    border-radius: 14px;
+    margin-top: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.total-label {
+    font-weight: bold;
+}
+
+.total {
+    font-size: 23px;
+    font-weight: bold;
+    color: var(--title);
+}
+
+.cart-info {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 15px;
+    line-height: 1.7;
+}
+
+/* FORM PEMBELI */
+.order-box label {
+    display: block;
+    margin: 16px 0 8px;
+    font-weight: bold;
+}
+
+.order-box input,
+.order-box textarea {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    font-size: 15px;
+    background: var(--input);
+    color: var(--text);
+    outline: none;
+    transition: 0.3s;
+}
+
+.order-box input:focus,
+.order-box textarea:focus {
+    border-color: #188044;
+    box-shadow: 0 0 0 3px #18804420;
+}
+
+.order-box input::placeholder,
+.order-box textarea::placeholder {
+    color: var(--muted);
+}
+
+.order-box textarea {
+    resize: vertical;
+}
+
+/* TOMBOL PESAN TERPISAH */
+.order-action {
+    max-width: 1100px;
+    margin: 28px auto 0;
+    padding: 28px;
+    background: linear-gradient(120deg, #188044, #2a9b59);
+    color: white;
+    border-radius: 22px;
+    text-align: center;
+    box-shadow: 0 8px 25px #18804425;
+    position: relative;
+    overflow: hidden;
+}
+
+.order-action::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -200%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+        110deg,
+        transparent,
+        #ffffff20,
+        transparent
+    );
+    animation: shine 5s linear infinite;
+}
+
+.order-action h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.order-action p {
+    line-height: 1.7;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.order-action .btn {
+    background: white;
+    color: #187844;
+    padding: 15px 30px;
+    font-size: 16px;
+    position: relative;
+    animation: pulse 3s infinite;
+}
+
+.order-action .btn:hover {
+    background: #d9ff88;
+}
+
+/* FOOTER */
+footer {
+    background: var(--footer);
+    color: white;
+    text-align: center;
+    padding: 35px 15px;
+    line-height: 1.8;
+}
+
+.footer-logo {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.footer-line {
+    width: 60px;
+    height: 3px;
+    background: #d9ff88;
+    margin: 15px auto;
+    border-radius: 10px;
+}
+
+/* TOMBOL KE ATAS */
+.back-top {
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #188044;
+    color: white;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px #00000025;
+    z-index: 999;
+    transition: 0.3s;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(15px);
+}
+
+.back-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-top:hover {
+    transform: translateY(-5px);
+    background: #105e30;
+}
+
+/* RESPONSIVE */
+@media (max-width: 850px) {
+    .order-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    header {
+        justify-content: center;
+        text-align: center;
+        padding: 16px 5%;
+    }
+
+    nav {
+        justify-content: center;
+        gap: 11px;
+    }
+
+    nav a {
+        font-size: 13px;
+    }
+
+    .theme-toggle {
+        font-size: 13px;
+        padding: 9px 12px;
+    }
+
+    .hero {
+        text-align: center;
+        padding: 45px 6%;
+    }
+
+    .hero-image img {
+        max-height: 280px;
+    }
+
+    section {
+        padding: 45px 6%;
+    }
+
+    .section-title {
+        font-size: 27px;
+    }
+
+    .products {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .card {
+        padding: 10px;
+        border-radius: 15px;
+    }
+
+    .fruit {
+        height: 135px;
+    }
+
+    .card h3 {
+        font-size: 17px;
+    }
+
+    .card .btn {
+        padding: 11px 8px;
+        font-size: 12px;
+    }
+
+    .price {
+        font-size: 17px;
+    }
+
+    .benefit-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .benefit-card img {
+        height: 155px;
+    }
+
+    .benefit-content {
+        padding: 15px 10px;
+    }
+
+    .benefit-content h3 {
+        font-size: 18px;
+    }
+
+    .benefit-content p {
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .order-box {
+        padding: 18px;
+    }
+
+    .order-action {
+        padding: 24px 17px;
+    }
+
+    .order-action h3 {
+        font-size: 21px;
+    }
+
+    .cart-item {
+        flex-wrap: wrap;
+    }
+}
+
+/* Kurangi animasi jika pengunjung mengatur preferensi */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+    <div class="logo">🍏 Fresh<span>Mart</span></div>
+
+    <nav>
+        <a href="#home">Beranda</a>
+        <a href="#produk">Produk</a>
+        <a href="#manfaat">Manfaat</a>
+        <a href="#pesan">Pesan</a>
+
+        <button class="theme-toggle" id="themeToggle" type="button">
+            🌙 Dark Mode
+        </button>
+    </nav>
+</header>
+
+<!-- BERANDA -->
+<div class="hero" id="home">
+
+    <div class="hero-text">
+        <div class="hero-label">🍃 Fresh & Healthy Everyday</div>
+
+        <h1>Buah Segar,<br>Hidup Lebih Sehat!</h1>
+
+        <p>
+            Selamat datang di FreshMart! Nikmati berbagai pilihan
+            buah segar dan berkualitas dengan harga bersahabat.
+            Pilih buah favoritmu dan pesan sekarang!
+        </p>
+
+        <a href="#produk" class="btn">
+            Belanja Sekarang 🛒
+        </a>
+    </div>
+
+    <div class="hero-image">
+        <img
+        src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=900"
+        alt="Aneka buah segar">
+    </div>
+
+</div>
+
+<!-- PRODUK -->
+<section id="produk">
+
+    <h2 class="section-title reveal">🍉 Buah Pilihan Kami</h2>
+
+    <p class="subtitle reveal">
+        Pilih buah favoritmu, lalu tambahkan ke keranjang!
+    </p>
+
+    <div class="products" id="productList"></div>
+
+</section>
+
+<!-- MANFAAT BUAH -->
+<section class="benefits" id="manfaat">
+
+    <h2 class="section-title reveal">🌱 Manfaat Buah-Buahan</h2>
+
+    <p class="subtitle reveal">
+        Kenali manfaat berbagai buah yang baik untuk kesehatan tubuh.
+    </p>
+
+    <div class="benefit-grid">
+
+        <div class="benefit-card reveal">
+            <img
+            src="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=600"
+            alt="Buah apel">
+
+            <div class="benefit-content">
+                <h3>Apel</h3>
+                <p>
+                    Mengandung serat yang membantu menjaga kesehatan
+                    pencernaan serta vitamin yang baik untuk tubuh.
+                </p>
+            </div>
+        </div>
+
+        <div class="benefit-card reveal delay-1">
+            <img
+            src="https://images.unsplash.com/photo-1547514701-42782101795e?w=600"
+            alt="Buah jeruk">
+
+            <div class="benefit-content">
+                <h3>Jeruk</h3>
+                <p>
+                    Kaya vitamin C yang membantu mendukung daya tahan
+                    tubuh dan menjaga kesehatan.
+                </p>
+            </div>
+        </div>
+
+        <div class="benefit-card reveal delay-2">
+            <img
+            src="https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600"
+            alt="Buah pisang">
+
+            <div class="benefit-content">
+                <h3>Pisang</h3>
+                <p>
+                    Mengandung kalium dan karbohidrat yang membantu
+                    memenuhi kebutuhan energi sehari-hari.
+                </p>
+            </div>
+        </div>
+
+        <div class="benefit-card reveal delay-3">
+            <img
+            src="https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=600"
+            alt="Buah anggur">
+
+            <div class="benefit-content">
+                <h3>Anggur</h3>
+                <p>
+                    Mengandung antioksidan yang membantu melindungi
+                    sel tubuh dari kerusakan akibat radikal bebas.
+                </p>
+            </div>
+        </div>
+
+        <div class="benefit-card reveal">
+            <img
+            src="https://images.unsplash.com/photo-1563114773-84221bd62daa?w=600"
+            alt="Buah semangka">
+
+            <div class="benefit-content">
+                <h3>Semangka</h3>
+                <p>
+                    Memiliki kandungan air yang tinggi sehingga membantu
+                    memenuhi kebutuhan cairan tubuh.
+                </p>
+            </div>
+        </div>
+
+        <div class="benefit-card reveal delay-1">
+            <img
+            src="https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=600"
+            alt="Buah stroberi">
+
+            <div class="benefit-content">
+                <h3>Stroberi</h3>
+                <p>
+                    Mengandung vitamin C, serat, dan antioksidan
+                    yang baik untuk mendukung kesehatan tubuh.
+                </p>
+            </div>
+        </div>
+
+        <div class="benefit-card reveal delay-2">
+            <img
+            src="https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=600"
+            alt="Buah nanas">
+
+            <div class="benefit-content">
+                <h3>Nanas</h3>
+                <p>
+                    Mengandung vitamin C dan bromelain, yaitu enzim
+                    yang membantu proses pencernaan protein.
+                </p>
+            </div>
+        </div>
+
+        <div class="benefit-card reveal delay-3">
+            <img
+            src="https://images.unsplash.com/photo-1553279768-865429fa0078?w=600"
+            alt="Buah mangga">
+
+            <div class="benefit-content">
+                <h3>Mangga</h3>
+                <p>
+                    Mengandung vitamin A dan vitamin C yang mendukung
+                    kesehatan mata serta daya tahan tubuh.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- PEMESANAN -->
+<section class="order" id="pesan">
+
+    <h2 class="section-title reveal">🛒 Pemesanan FreshMart</h2>
+
+    <p class="subtitle reveal">
+        Pilih buah, cek keranjang, dan isi data untuk melakukan pemesanan.
+    </p>
+
+    <div class="order-layout">
+
+        <!-- KERANJANG -->
+        <div class="order-box reveal">
+
+            <div class="box-heading">
+                <div class="box-icon">🛒</div>
+
+                <div>
+                    <h3>Keranjang Belanja</h3>
+                    <p>Daftar buah pilihan kamu</p>
+                </div>
+            </div>
+
+            <div class="cart-list" id="cartList">
+                Keranjang masih kosong.
+            </div>
+
+            <div class="total-box">
+                <span class="total-label">Total Pembayaran</span>
+                <span class="total" id="total">Rp0</span>
+            </div>
+
+            <p class="cart-info">
+                💡 Harga buah dihitung berdasarkan jumlah kilogram.
+                Gunakan tombol + dan − untuk mengatur jumlah pesanan.
+            </p>
+
+        </div>
+
+        <!-- DATA PEMBELI -->
+        <div class="order-box reveal delay-1">
+
+            <div class="box-heading">
+                <div class="box-icon">📝</div>
+
+                <div>
+                    <h3>Data Pemesan</h3>
+                    <p>Lengkapi data sebelum memesan</p>
+                </div>
+            </div>
+
+            <form id="orderForm">
+
+                <label for="nama">Nama lengkap</label>
+                <input type="text" id="nama"
+                placeholder="Masukkan nama kamu" required>
+
+                <label for="telepon">Nomor WhatsApp kamu</label>
+                <input type="tel" id="telepon"
+                placeholder="Contoh: 081234567890" required>
+
+                <label for="alamat">Alamat pengiriman</label>
+                <textarea id="alamat" rows="3"
+                placeholder="Masukkan alamat lengkap" required></textarea>
+
+                <label for="catatan">Catatan (opsional)</label>
+                <textarea id="catatan" rows="3"
+                placeholder="Contoh: buah jangan terlalu matang"></textarea>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- TOMBOL PESAN DIPISAH -->
+    <div class="order-action reveal">
+
+        <h3>Pesanan Kamu Sudah Siap? 🍏</h3>
+
+        <p>
+            Pastikan buah dan data pemesanan sudah benar.
+            Klik tombol di bawah untuk melanjutkan ke WhatsApp FreshMart.
+        </p>
+
+        <button class="btn" type="submit" form="orderForm">
+            📲 Pesan Sekarang via WhatsApp
+        </button>
+
+    </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+
+    <div class="footer-logo">🍏 FreshMart</div>
+
+    <p>Buah berkualitas, segar setiap hari.</p>
+
+    <div class="footer-line"></div>
+
+    <p>© 2026 FreshMart. Semua hak dilindungi.</p>
+
+</footer>
+
+<!-- TOMBOL KEMBALI KE ATAS -->
+<button class="back-top" id="backTop" aria-label="Kembali ke atas">
+    ↑
+</button>
+
+<script>
+
+/* =========================
+   LIGHT MODE / DARK MODE
+========================= */
+
+const themeToggle = document.getElementById("themeToggle");
+
+function updateThemeButton() {
+    const darkMode = document.documentElement.classList.contains("dark-mode");
+
+    themeToggle.innerHTML = darkMode
+        ? "☀️ Light Mode"
+        : "🌙 Dark Mode";
+}
+
+themeToggle.addEventListener("click", function() {
+
+    document.documentElement.classList.toggle("dark-mode");
+
+    const darkMode = document.documentElement.classList.contains("dark-mode");
+
+    localStorage.setItem(
+        "freshmart-theme",
+        darkMode ? "dark" : "light"
+    );
+
+    updateThemeButton();
+
+});
+
+updateThemeButton();
+
+/* =========================
+   ANIMASI SCROLL REVEAL
+========================= */
+
+const revealElements = document.querySelectorAll(".reveal");
+
+const revealObserver = new IntersectionObserver(function(entries) {
+
+    entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+            revealObserver.unobserve(entry.target);
+        }
+
+    });
+
+}, {
+    threshold: 0.12
+});
+
+revealElements.forEach(element => {
+    revealObserver.observe(element);
+});
+
+/* =========================
+   DATA BUAH
+========================= */
+
+const buah = [
+    {
+        nama: "Apel Merah",
+        harga: 30000,
+        foto: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=600"
+    },
+    {
+        nama: "Jeruk Manis",
+        harga: 20000,
+        foto: "https://images.unsplash.com/photo-1547514701-42782101795e?w=600"
+    },
+    {
+        nama: "Pisang",
+        harga: 15000,
+        foto: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600"
+    },
+    {
+        nama: "Anggur",
+        harga: 45000,
+        foto: "https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=600"
+    },
+    {
+        nama: "Semangka",
+        harga: 18000,
+        foto: "https://images.unsplash.com/photo-1563114773-84221bd62daa?w=600"
+    },
+    {
+        nama: "Stroberi",
+        harga: 35000,
+        foto: "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=600"
+    },
+    {
+        nama: "Nanas",
+        harga: 17000,
+        foto: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=600"
+    },
+    {
+        nama: "Mangga",
+        harga: 25000,
+        foto: "https://images.unsplash.com/photo-1553279768-865429fa0078?w=600"
+    }
+];
+
+const keranjang = {};
+
+function rupiah(angka) {
+    return "Rp" + angka.toLocaleString("id-ID");
+}
+
+/* =========================
+   TAMPILKAN PRODUK
+========================= */
+
+function tampilkanProduk() {
+
+    const tempat = document.getElementById("productList");
+
+    tempat.innerHTML = buah.map((item, i) => `
+        <div class="card reveal">
+
+            <div class="fruit">
+                <img
+                src="${item.foto}"
+                alt="${item.nama}"
+                loading="lazy"
+                onerror="this.style.display='none'">
+            </div>
+
+            <h3>${item.nama}</h3>
+
+            <p>Buah segar dan berkualitas</p>
+
+            <div class="price">
+                ${rupiah(item.harga)}/kg
+            </div>
+
+            <button class="btn" onclick="tambah(${i})">
+                + Tambah ke Keranjang
+            </button>
+
+        </div>
+    `).join("");
+
+    // Observer juga dipasang pada produk yang baru dibuat
+    tempat.querySelectorAll(".reveal").forEach(element => {
+        revealObserver.observe(element);
+    });
+
+}
+
+/* =========================
+   TAMBAH PRODUK
+========================= */
+
+function tambah(index) {
+
+    const nama = buah[index].nama;
+
+    if (!keranjang[nama]) {
+        keranjang[nama] = {
+            ...buah[index],
+            jumlah: 0
+        };
+    }
+
+    keranjang[nama].jumlah++;
+
+    tampilkanKeranjang();
+
+}
+
+/* =========================
+   UBAH JUMLAH
+========================= */
+
+function ubahJumlah(nama, perubahan) {
+
+    if (!keranjang[nama]) return;
+
+    keranjang[nama].jumlah += perubahan;
+
+    if (keranjang[nama].jumlah <= 0) {
+        delete keranjang[nama];
+    }
+
+    tampilkanKeranjang();
+
+}
+
+/* =========================
+   TAMPILKAN KERANJANG
+========================= */
+
+function tampilkanKeranjang() {
+
+    const daftar = document.getElementById("cartList");
+    const item = Object.values(keranjang);
+
+    if (item.length === 0) {
+
+        daftar.innerHTML = "Keranjang masih kosong.";
+
+        document.getElementById("total").textContent = "Rp0";
+
+        return;
+
+    }
+
+    daftar.innerHTML = item.map(b => `
+        <div class="cart-item">
+
+            <div>
+                <div class="cart-name">${b.nama}</div>
+
+                <div class="cart-price">
+                    ${rupiah(b.harga)} x ${b.jumlah} kg
+                </div>
+
+                <div class="cart-price">
+                    Subtotal: ${rupiah(b.harga * b.jumlah)}
+                </div>
+            </div>
+
+            <div class="qty-controls">
+
+                <button type="button"
+                onclick="ubahJumlah('${b.nama}',-1)">−</button>
+
+                <span class="qty-number">${b.jumlah}</span>
+
+                <button type="button"
+                onclick="ubahJumlah('${b.nama}',1)">+</button>
+
+            </div>
+
+        </div>
+    `).join("");
+
+    const total = item.reduce(
+        (jumlah, b) => jumlah + b.harga * b.jumlah,
+        0
+    );
+
+    document.getElementById("total").textContent = rupiah(total);
+
+}
+
+/* =========================
+   PESAN VIA WHATSAPP
+========================= */
+
+document.getElementById("orderForm").addEventListener(
+"submit", function(e) {
+
+    e.preventDefault();
+
+    const item = Object.values(keranjang);
+
+    if (item.length === 0) {
+        alert("Keranjang masih kosong! Pilih buah terlebih dahulu.");
+        document.getElementById("produk").scrollIntoView({
+            behavior: "smooth"
+        });
+        return;
+    }
+
+    const nama = document.getElementById("nama").value.trim();
+    const telepon = document.getElementById("telepon").value.trim();
+    const alamat = document.getElementById("alamat").value.trim();
+    const catatan = document.getElementById("catatan").value.trim();
+
+    if (!nama || !telepon || !alamat) {
+        alert("Mohon lengkapi nama, nomor WhatsApp, dan alamat.");
+        return;
+    }
+
+    const total = item.reduce(
+        (jumlah, b) => jumlah + b.harga * b.jumlah,
+        0
+    );
+
+    const daftarPesanan = item.map(b =>
+        `${b.nama} - ${b.jumlah} kg x ${rupiah(b.harga)} = ${rupiah(b.jumlah * b.harga)}`
+    ).join("\n");
+
+    const pesan =
+`HALO FRESHMART! Saya ingin memesan buah.
+
+Nama: ${nama}
+WhatsApp pelanggan: ${telepon}
+Alamat: ${alamat}
+
+PESANAN:
+${daftarPesanan}
+
+Total: ${rupiah(total)}
+Catatan: ${catatan || "-"}
+
+Mohon konfirmasi pesanan saya. Terima kasih!`;
+
+    // NOMOR WHATSAPP TOKO
+    const url = "https://wa.me/6281400867470?text="
+    + encodeURIComponent(pesan);
+
+    window.open(url, "_blank");
+
+});
+
+/* =========================
+   TOMBOL KEMBALI KE ATAS
+========================= */
+
+const backTop = document.getElementById("backTop");
+
+window.addEventListener("scroll", function() {
+
+    if (window.scrollY > 400) {
+        backTop.classList.add("show");
+    } else {
+        backTop.classList.remove("show");
+    }
+
+});
+
+backTop.addEventListener("click", function() {
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+});
+
+/* =========================
+   JALANKAN WEBSITE
+========================= */
+
+tampilkanProduk();
+tampilkanKeranjang();
+
+</script>
+
+</body>
+</html>
